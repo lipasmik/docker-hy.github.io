@@ -22,6 +22,5 @@ jobs:
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             docker build --rm=false -t registry.heroku.com/exer3-2/web .
             docker push registry.heroku.com/exer3-2/web
-            heroku container:push web
             heroku container:release web
 
