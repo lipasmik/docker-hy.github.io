@@ -8,15 +8,15 @@ workflows:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: 'latest'
       - deploy-to-heroku:
-        requires:
-          - docker/publish
+          requires:
+            - docker/publish
 jobs:
   deploy-to-heroku:
     machine:true
     steps:
       - checkout
       - run:
-          name: Push Docker image to Heroku
+          name: Build and push Docker image to Heroku
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             heroku container:login
