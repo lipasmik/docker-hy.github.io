@@ -1,21 +1,27 @@
 version: 2.1
 orbs:
   docker: circleci/docker@1.0.0
+workflows:
+  build-deploy:
+    jobs:
+      - docker/publish:
+          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
+          tag: 'latest'
+      - deploy-to-heroku:
+        requires:
+          - docker/publish
 jobs:
   deploy-to-heroku:
+    machine:true
     steps:
+      - checkout
       - run:
           name: Push Docker image to Heroku
           command: |
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             heroku container:login
+            docker build --rm=false -t registry.heroku.com/exer3-2/web .
+            docker push registry.heroku.com/exer3-2/web
             heroku container:push web
             heroku container:release web
 
-workflows:
-  deploy:
-    jobs:
-      - docker/publish:
-          image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
-          tag: 'latest'
-      - deploy-to-heroku
