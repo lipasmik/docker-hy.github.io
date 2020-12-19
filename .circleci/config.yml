@@ -12,8 +12,8 @@ workflows:
             - docker/publish
 jobs:
   deploy-to-heroku:
-    #machine:true
-    steps:
+    machine: true
+    steps: 
       - checkout
       - run:
           name: Build and push Docker image to Heroku
