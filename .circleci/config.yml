@@ -12,7 +12,7 @@ workflows:
             - docker/publish
 jobs:
   deploy-to-heroku:
-    machine:true
+    #machine:true
     steps:
       - checkout
       - run:
