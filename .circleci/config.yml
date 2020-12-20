@@ -18,10 +18,10 @@ jobs:
       - run:
           name: Build and push Docker image to Heroku
           command: |
-            heroku container:login
             sudo curl https://cli-assets.heroku.com/install.sh | sh
+            heroku container:login
             docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
             docker push registry.heroku.com/$HEROKU_APP_NAME/web
             sudo ln -s /usr/local/heroku/bin/heroku /usr/bin/heroku
-            heroku container:release -a $HEROKU_APP_NAME web
+            heroku container:release web -a $HEROKU_APP_NAME
 
