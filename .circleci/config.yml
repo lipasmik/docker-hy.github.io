@@ -13,6 +13,7 @@ workflows:
 jobs:
   deploy-to-heroku:
     machine: true
+    working_directory: $CIRCLE_WORKING_DIRECTORY
     steps: 
       - checkout
       - run:
@@ -22,6 +23,5 @@ jobs:
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             docker build -t registry.heroku.com/$HEROKU_APP_NAME/web .
             docker push registry.heroku.com/$HEROKU_APP_NAME/web
-            cd /usr/local/bin
             heroku container:release -a $HEROKU_APP_NAME web
 
