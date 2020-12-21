@@ -17,3 +17,7 @@ RUN jekyll build
 FROM nginx:alpine
 
 COPY --from=build-stage /usr/src/app/_site/ /usr/share/nginx/html
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/nginx.conf && nginx -g 'daemon off;'
